@@ -52,5 +52,10 @@ public class ThirdPersonPlayer : MonoBehaviour {
 			Debug.DrawRay (new Vector3 (root.position.x, root.position.y + 2f, root.position.z), rootDirection, Color.magenta);
 			Debug.DrawRay (new Vector3 (root.position.x, root.position.y + 2f, root.position.z), stickDirection, Color.blue);
 		}
+
+		float angleRootToMove = Vector3.Angle (rootDirection, moveDirection) * (axisSign.y >= 0 ? -1f : 1f);
+		angleRootToMove /= 180f;
+
+		directionOut = angleRootToMove + directionSpeed;
 	}
 }

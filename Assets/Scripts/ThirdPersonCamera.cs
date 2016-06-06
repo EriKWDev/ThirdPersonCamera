@@ -39,7 +39,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		targetPosition = follow.position + follow.up * distanceUp - follow.forward * distanceAway;
 
 		if (debug) {
-			Debug.DrawRay (follow.position, Vector3.up * distanceUp, Color.red);
+			Debug.DrawRay (follow.position + (-follow.forward * distanceAway), Vector3.up * distanceUp, Color.red);
 			Debug.DrawRay (follow.position, -1f * follow.forward * distanceAway, Color.blue);
 			Debug.DrawLine (follow.position, targetPosition, Color.magenta);;
 		}
