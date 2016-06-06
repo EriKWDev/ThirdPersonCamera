@@ -15,15 +15,18 @@ public class ThirdPersonCamera : MonoBehaviour {
 	private float distanceUp;
 	[SerializeField]
 	private float smooth;
-
 	[SerializeField]
-	private Transform follow;
+	private Transform followTransform;
+	[SerializeField]
+	private Vector3 offset = new Vector3 (0f, 1.5f, 0f);
+
+	private Vector3 lookDir;
 	private Vector3 targetPosition;
 
 	//[Header("Public Values")]
 
 	void Start () {
-		follow = GameObject.FindGameObjectWithTag ("Player").transform;
+		followTransform = GameObject.FindGameObjectWithTag ("Player").transform;
 	}
 
 	void Update () {
@@ -36,15 +39,24 @@ public class ThirdPersonCamera : MonoBehaviour {
 
 	//Test change for commit
 	void LateUpdate() {
-		targetPosition = follow.position + follow.up * distanceUp - follow.forward * distanceAway;
+		Vector3 characterOffset = followTransform.position + offset;
+
+		lookDir = characterOffset - transform.position;
+		lookDir.y = 0f;
+		lookDir.Normalize ();
+		if (debug) {
+			Debug.DrawRay (transform.position, lookDir, Color.green);
+		}
+
+		targetPosition = followTransform.position + followTransform.up * distanceUp - followTransform.forward * distanceAway;
 
 		if (debug) {
-			Debug.DrawRay (follow.position + (-follow.forward * distanceAway), Vector3.up * distanceUp, Color.red);
-			Debug.DrawRay (follow.position, -1f * follow.forward * distanceAway, Color.blue);
-			Debug.DrawLine (follow.position, targetPosition, Color.magenta);;
+			Debug.DrawRay (followTransform.position + (-followTransform.forward * distanceAway), Vector3.up * distanceUp, Color.red);
+			Debug.DrawRay (followTransform.position, -1f * followTransform.forward * distanceAway, Color.blue);
+			Debug.DrawLine (followTransform.position, targetPosition, Color.magenta);;
 		}
 
 		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * smooth);
-		transform.LookAt (follow);
+		transform.LookAt (followTransform);
 	}
 }
