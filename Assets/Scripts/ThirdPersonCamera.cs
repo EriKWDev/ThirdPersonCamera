@@ -23,7 +23,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 	[SerializeField]
 	private float camSmoothDampTime = 0.1f;
 	[SerializeField]
-	private Vector3 velocityCamSmooth = Vector3.zero;
+	private Vector3 velocityCamSmooth = Vector3.one;
 
 	private Vector3 lookDir;
 	private Vector3 targetPosition;
@@ -38,7 +38,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 			Debug.DrawRay (transform.position, lookDir, Color.green);
 		}
 
-		targetPosition = characterOffset + followTransform.up * distanceUp - lookDir * distanceAway + ;
+		targetPosition = characterOffset + followTransform.up * distanceUp - lookDir * distanceAway;
 
 		if (debug) {
 			Debug.DrawRay (followTransform.position + (-lookDir * distanceAway), Vector3.up * distanceUp, Color.red);
@@ -54,15 +54,17 @@ public class ThirdPersonCamera : MonoBehaviour {
 	}
 
 	private void SmoothPosition(Vector3 fromPos, Vector3 toPos) {
-		transform.position = Vector3.SmoothDamp (fromPos, toPos, ref velocityCamSmooth, camSmoothDampTime);
+		//transform.position = Vector3.SmoothDamp (fromPos, toPos, ref velocityCamSmooth, camSmoothDampTime);
+		transform.position = Vector3.Lerp (fromPos, toPos, Time.deltaTime * ( 1f + camSmoothDampTime));
 	}
 
 	private void CompensateForWalls(Vector3 fromObject, ref Vector3 toTarget) {
 		if (debug) {
-			Debug.DrawLine (fromObject, fromObject, Color.cyan);
+			Debug.DrawLine (fromObject, toTarget, Color.cyan);
 		}
+
 		RaycastHit wallHit = new RaycastHit ();
-		if (Physics.Linecast (fromObject, fromObject, out wallHit)) {
+		if (Physics.Linecast (fromObject, toTarget, out wallHit)) {
 			if (debug) {
 				Debug.DrawRay (wallHit.point, Vector3.left, Color.red);
 			}	
