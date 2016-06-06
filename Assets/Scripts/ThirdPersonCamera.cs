@@ -8,6 +8,9 @@ public class ThirdPersonCamera : MonoBehaviour {
 	[Header("Debugging")]
 	public bool debug = false;
 
+	[Header("Public Values")]
+	public Transform followTransform;
+
 	[Header("Private Values")]
 	[SerializeField]
 	private float distanceAway;
@@ -15,8 +18,6 @@ public class ThirdPersonCamera : MonoBehaviour {
 	private float distanceUp;
 	[SerializeField]
 	private float smooth;
-	[SerializeField]
-	private Transform followTransform;
 	[SerializeField]
 	private Vector3 offset = new Vector3 (0f, 1.5f, 0f);
 
@@ -28,21 +29,6 @@ public class ThirdPersonCamera : MonoBehaviour {
 	private Vector3 lookDir;
 	private Vector3 targetPosition;
 
-	//[Header("Public Values")]
-
-	void Start () {
-		followTransform = GameObject.FindGameObjectWithTag ("Player").transform;
-	}
-
-	void Update () {
-	
-	}
-
-	void OnDrawGizmos () {
-		
-	}
-
-	//Test change for commit
 	void LateUpdate() {
 		Vector3 characterOffset = followTransform.position + offset;
 

@@ -13,29 +13,21 @@ public class ThirdPersonPlayer : MonoBehaviour {
 	private ThirdPersonCamera gamecam;
 	[SerializeField]
 	private float directionSpeed = 3f;
+	[SerializeField]
+	private float rotationDegreePerSecond = 120f;
 
 	private float speed = 0f;
 	private float direction = 0f;
 	private float h = 0f;
 	private float v = 0f;
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
 	void Update () {
+
 		h = Input.GetAxis ("Horizontal");
 		v = Input.GetAxis ("Vertical");
 
 		StickToWorldSpace (this.transform, gamecam.transform, ref direction, ref speed);
-	}
-
-	void FixedUpdate() {
-		if(IsInLocomotion () && ((direction >= 0f && h >= 0f) || (direction < 0f && h < 0f))) {
-			
-		}
+		
 	}
 
 	public void StickToWorldSpace(Transform root, Transform camera, ref float directionOut, ref float speedOut) {
@@ -63,9 +55,5 @@ public class ThirdPersonPlayer : MonoBehaviour {
 		angleRootToMove /= 180f;
 
 		directionOut = angleRootToMove + directionSpeed;
-	}
-
-	private bool IsInLocomotion () {
-		return false;
 	}
 }
