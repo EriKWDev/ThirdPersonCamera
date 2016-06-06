@@ -5,7 +5,7 @@ using System.Collections;
 [DisallowMultipleComponent]
 public class ThirdPersonCamera : MonoBehaviour {
 
-	[Header("Debug")]
+	[Header("Debugging")]
 	public bool debug = false;
 
 	[Header("Private Values")]
@@ -19,6 +19,11 @@ public class ThirdPersonCamera : MonoBehaviour {
 	private Transform followTransform;
 	[SerializeField]
 	private Vector3 offset = new Vector3 (0f, 1.5f, 0f);
+
+	[Header("Smoothing and Damping")]
+	[SerializeField]
+	private float camSmoothDampTime = 0.1f;
+	private Vector3 velocityCamSmooth = Vector3.zero;
 
 	private Vector3 lookDir;
 	private Vector3 targetPosition;
@@ -48,15 +53,21 @@ public class ThirdPersonCamera : MonoBehaviour {
 			Debug.DrawRay (transform.position, lookDir, Color.green);
 		}
 
-		targetPosition = followTransform.position + followTransform.up * distanceUp - followTransform.forward * distanceAway;
+		targetPosition = followTransform.position + followTransform.up * distanceUp - lookDir * distanceAway;
 
 		if (debug) {
-			Debug.DrawRay (followTransform.position + (-followTransform.forward * distanceAway), Vector3.up * distanceUp, Color.red);
-			Debug.DrawRay (followTransform.position, -1f * followTransform.forward * distanceAway, Color.blue);
+			Debug.DrawRay (followTransform.position + (-lookDir * distanceAway), Vector3.up * distanceUp, Color.red);
+			Debug.DrawRay (followTransform.position, -1f * lookDir * distanceAway, Color.blue);
 			Debug.DrawLine (followTransform.position, targetPosition, Color.magenta);;
 		}
 
-		transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * smooth);
+		SmoothPosition (transform.position, targetPosition);
+
+
 		transform.LookAt (followTransform);
+	}
+
+	private void SmoothPosition(Vector3 fromPos, Vector3 toPos) {
+		transform.position = Vector3.SmoothDamp (fromPos, toPos, ref velocityCamSmooth, camSmoothDampTime);
 	}
 }

@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[AddComponentMenu("ErikWDev/Third Person Character Logic Script")]
+[DisallowMultipleComponent]
 public class ThirdPersonPlayer : MonoBehaviour {
 
 	[Header("Debug")]
@@ -30,6 +32,12 @@ public class ThirdPersonPlayer : MonoBehaviour {
 		StickToWorldSpace (this.transform, gamecam.transform, ref direction, ref speed);
 	}
 
+	void FixedUpdate() {
+		if(IsInLocomotion () && ((direction >= 0f && h >= 0f) || (direction < 0f && h < 0f))) {
+			
+		}
+	}
+
 	public void StickToWorldSpace(Transform root, Transform camera, ref float directionOut, ref float speedOut) {
 		Vector3 rootDirection = root.forward;
 
@@ -55,5 +63,9 @@ public class ThirdPersonPlayer : MonoBehaviour {
 		angleRootToMove /= 180f;
 
 		directionOut = angleRootToMove + directionSpeed;
+	}
+
+	private bool IsInLocomotion () {
+		return false;
 	}
 }
