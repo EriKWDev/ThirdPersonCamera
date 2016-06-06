@@ -27,8 +27,6 @@ public class ThirdPersonPlayer : MonoBehaviour {
 		h = Input.GetAxis ("Horizontal");
 		v = Input.GetAxis ("Vertical");
 
-		speed = new Vector2 (h, v).sqrMagnitude;
-
 		StickToWorldSpace (this.transform, gamecam.transform, ref direction, ref speed);
 	}
 
