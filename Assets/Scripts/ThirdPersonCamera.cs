@@ -34,6 +34,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		
 	}
 
+	//Test change for commit
 	void LateUpdate() {
 		targetPosition = follow.position + follow.up * distanceUp - follow.forward * distanceAway;
 
