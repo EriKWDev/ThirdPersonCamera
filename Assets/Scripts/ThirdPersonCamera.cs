@@ -150,6 +150,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 			break;
 
 		case CameraStates.StickToObject:
+			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, defaultFOV, FOVLerpValue * Time.deltaTime);
 			targetPosition = objectToStickTo.transform.position;
 
 			SmoothPosition (transform.position, targetPosition);
