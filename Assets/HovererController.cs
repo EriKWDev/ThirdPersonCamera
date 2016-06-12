@@ -18,10 +18,10 @@ public class HovererController : MonoBehaviour {
     private float groundAngleVelocity;
     private float originalAcceleration;
 
-    private Rigidbody rigidbody;
+	private Rigidbody thisRigidbody;
 
     void Awake() {
-        rigidbody = GetComponent<Rigidbody>();
+        thisRigidbody = GetComponent<Rigidbody>();
         originalAcceleration = acceleration;
         playerCamera = GetComponentInChildren<Camera>();
         transform.position = new Vector3(0f, 14f, 0f);
@@ -30,35 +30,32 @@ public class HovererController : MonoBehaviour {
 
 	void FixedUpdate () {
         if (Physics.Raycast(transform.position, transform.up * -1f, 3f)) {
-            rigidbody.drag = 1f;
+            thisRigidbody.drag = 1f;
 
             Vector3 forwardForce = transform.forward * acceleration * Input.GetAxis("Vertical");
 
-            forwardForce = forwardForce * Time.deltaTime * rigidbody.mass;
+            forwardForce = forwardForce * Time.deltaTime * thisRigidbody.mass;
 
-            rigidbody.AddForce(forwardForce);
+			thisRigidbody.AddForce(forwardForce);
         } else {
-            rigidbody.drag = 0f;
+            thisRigidbody.drag = 0f;
         }
 
         Vector3 turnTorque = Vector3.up * rotationRate * Input.GetAxis("Horizontal");
 
-        turnTorque = turnTorque * Time.deltaTime * rigidbody.mass;
-        rigidbody.AddTorque(turnTorque);
+        turnTorque = turnTorque * Time.deltaTime * thisRigidbody.mass;
+        thisRigidbody.AddTorque(turnTorque);
 
         Vector3 newRotation = transform.eulerAngles;
         newRotation.z = Mathf.SmoothDampAngle(newRotation.z, Input.GetAxis ("Horizontal") * -turnRotationAngle, ref rotationVelocity, turnRotationSeekSpeed);
 	}
 
-    void Update ()
-    {
-        if (Input.GetKeyDown (KeyCode.R))
-        {
+    void Update () {
+        if (Input.GetKeyDown (KeyCode.R)) {
             transform.rotation = Quaternion.Euler(Vector3.zero);
         }
 
-        switch (buff)
-        {
+        switch (buff) {
             case CameraBuffEffects.Buffs.Speed:
                 acceleration = originalAcceleration * 1.3f;
                 break;
@@ -69,10 +66,8 @@ public class HovererController : MonoBehaviour {
         }
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.GetComponent<Buff>() != null)
-        {
+    void OnTriggerEnter(Collider other) {
+        if (other.GetComponent<Buff>() != null) {
             playerCamera.GetComponent<CameraBuffEffects>().buff = other.GetComponent<Buff>().buff;
             buff = other.GetComponent<Buff> ().buff;
         }

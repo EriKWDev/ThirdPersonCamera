@@ -10,11 +10,9 @@ public class ThirdPersonPlayer : MonoBehaviour {
 
 	[Header("Private Values")]
 	[SerializeField]
-	private ThirdPersonCamera gamecam;
+	public ThirdPersonCamera gamecam;
 	[SerializeField]
 	private float directionSpeed = 3f;
-	[SerializeField]
-	private float rotationDegreePerSecond = 120f;
 
 	private float speed = 0f;
 	private float direction = 0f;

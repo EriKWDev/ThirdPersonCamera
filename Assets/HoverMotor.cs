@@ -10,10 +10,10 @@ public class HoverMotor : MonoBehaviour {
     public float hoverHeight = 3.5f;
     private float powerInput;
     private float turnInput;
-    private Rigidbody rigidbody;
+	private Rigidbody thisRigidbody;
 
     void Awake() {
-        rigidbody = GetComponent<Rigidbody> ();
+        thisRigidbody = GetComponent<Rigidbody> ();
     }
 
     void Update() {
@@ -28,10 +28,10 @@ public class HoverMotor : MonoBehaviour {
         if (Physics.Raycast(ray, out hit, hoverHeight)) {
             float proportionalHeight = (hoverHeight - hit.distance) / hoverHeight;
             Vector3 appliedHoverForce = Vector3.up * proportionalHeight * hoverForce;
-            rigidbody.AddForce(appliedHoverForce, ForceMode.Acceleration);
+            thisRigidbody.AddForce(appliedHoverForce, ForceMode.Acceleration);
         }
 
-        rigidbody.AddRelativeForce(0f, 0f, powerInput * speed);
-        rigidbody.AddRelativeTorque(0f, turnInput * turnSpeed, 0f);
+        thisRigidbody.AddRelativeForce(0f, 0f, powerInput * speed);
+        thisRigidbody.AddRelativeTorque(0f, turnInput * turnSpeed, 0f);
     }
 }

@@ -7,10 +7,10 @@ public class ThrusterScript : MonoBehaviour {
     public float thrusterDistance;
     public Transform[] thrusters;
 
-    private Rigidbody rigidbody;
+	private Rigidbody thisRigidbody;
 
     void Awake() {
-        rigidbody = GetComponent<Rigidbody>();
+        thisRigidbody = GetComponent<Rigidbody>();
     }
 
 
@@ -24,9 +24,9 @@ public class ThrusterScript : MonoBehaviour {
                 distancePercentage = 1f - (hit.distance / thrusterDistance);
 
                 downwardForce = transform.up * thrusterStrength * distancePercentage;
-                downwardForce = downwardForce * Time.deltaTime * rigidbody.mass;
+                downwardForce = downwardForce * Time.deltaTime * thisRigidbody.mass;
 
-                rigidbody.AddForceAtPosition(downwardForce, thruster.position);
+                thisRigidbody.AddForceAtPosition(downwardForce, thruster.position);
             }
         }
     }
