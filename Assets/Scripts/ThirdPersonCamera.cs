@@ -68,6 +68,8 @@ public class ThirdPersonCamera : MonoBehaviour {
 	private Vector3 targetPosition;
 	private float defaultFOV;
 
+	private Vector3 characterOffset;
+
 	void Start() {
 		lookDir = followTransform.forward;
 
@@ -77,7 +79,6 @@ public class ThirdPersonCamera : MonoBehaviour {
 	}
 
 	void LateUpdate() {
-		Vector3 characterOffset = followTransform.position + new Vector3 (0f, distanceUp, offsetSides);
 
 		{
 			cameraState = defaultCameraState;
@@ -105,6 +106,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		switch (cameraState) {
 		case CameraStates.Behind:
 		default:
+			characterOffset = Vector3.Lerp (characterOffset, followTransform.position + new Vector3 (0f, distanceUp, 0f), lerpValue * Time.deltaTime);
 			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, defaultFOV, FOVLerpValue * Time.deltaTime);
 
 			lookDir = characterOffset - transform.position;
@@ -119,6 +121,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 			break;
 		
 		case CameraStates.BehindWithMouse:
+			characterOffset = Vector3.Lerp (characterOffset, followTransform.position + new Vector3 (0f, distanceUp, 0f), lerpValue * Time.deltaTime);
 			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, defaultFOV, FOVLerpValue * Time.deltaTime);
 
 			transform.RotateAround (characterOffset, Vector3.up, xRotateSpeed * Input.GetAxis ("Mouse X"));
@@ -132,15 +135,18 @@ public class ThirdPersonCamera : MonoBehaviour {
 			break;
 
 		case CameraStates.Target:
+			characterOffset = Vector3.Lerp (characterOffset, followTransform.position + new Vector3 (0f, distanceUp, 0f) + (transform.right * offsetSides), lerpValue * Time.deltaTime);
 			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, targetFOV, FOVLerpValue * Time.deltaTime);
 			targetPosition = characterOffset + followTransform.up * distanceUp - followTransform.forward * distanceAway;
 
 			CompensateForWalls (characterOffset, ref targetPosition);
 			SmoothPosition (transform.position, targetPosition);
+
 			transform.LookAt (characterOffset);
 			break;
 
 		case CameraStates.Small:
+			characterOffset = Vector3.Lerp (characterOffset, followTransform.position + new Vector3 (0f, distanceUp, 0f), lerpValue * Time.deltaTime);
 			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, smallFOV, FOVLerpValue * Time.deltaTime);
 			targetPosition = characterOffset + followTransform.up * (distanceUp - heightDecrease) - followTransform.forward * distanceAway;
 
@@ -150,6 +156,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 			break;
 
 		case CameraStates.StickToObject:
+			characterOffset = Vector3.Lerp (characterOffset, followTransform.position + new Vector3 (0f, distanceUp, 0f), lerpValue * Time.deltaTime);
 			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, defaultFOV, FOVLerpValue * Time.deltaTime);
 			targetPosition = objectToStickTo.transform.position;
 

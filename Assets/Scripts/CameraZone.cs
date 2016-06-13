@@ -7,14 +7,15 @@ public class CameraZone : MonoBehaviour {
 
 	public ThirdPersonCamera.CameraStates cameraZoneEffect;
 
+	public bool showLines = false;
 	public Color color = Color.red; 
 
 	[Header("Zone Effect Settings : StickToObject")]
 	public GameObject objectToStickTo;
 
 	void OnDrawGizmos() {
-		Gizmos.color = color;
-		Gizmos.DrawWireCube (transform.position, GetComponent<BoxCollider> ().size);
+		if(showLines)
+			DrawCube (transform.position, transform.rotation, GetComponent<BoxCollider> ().size);
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -45,5 +46,21 @@ public class CameraZone : MonoBehaviour {
 				break;
 			}
 		}
+	}
+
+	public void DrawCube (Vector3 position, Quaternion rotation, Vector3 scale) {
+		DrawCube (position, rotation, scale, color);
+	}
+
+	public void DrawCube (Vector3 position, Quaternion rotation, Vector3 scale, Color cubeColor) {
+		Matrix4x4 cubeTransform = Matrix4x4.TRS (position, rotation, scale);
+		Matrix4x4 oldGizmosMatrix = Gizmos.matrix;
+
+		Gizmos.matrix = cubeTransform;
+		Gizmos.color = cubeColor;
+
+		Gizmos.DrawWireCube (Vector3.zero, Vector3.one);
+
+		Gizmos.matrix = oldGizmosMatrix;
 	}
 }
