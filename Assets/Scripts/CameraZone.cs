@@ -5,6 +5,13 @@ using System.Collections;
 [RequireComponent (typeof (BoxCollider))]
 public class CameraZone : MonoBehaviour {
 
+	public enum Extras {
+		None,
+		setCameraBehindPlayer,
+		setCameraDefaultFov
+	}
+
+	public Extras otherEffects;
 	public ThirdPersonCamera.CameraStates cameraZoneEffect;
 
 	public bool showLines = false;
@@ -13,6 +20,9 @@ public class CameraZone : MonoBehaviour {
 	[Header("Zone Effect Settings : StickToObject")]
 	public GameObject objectToStickTo;
 
+	[Header("Zone Effect Settings : Orbit")]
+	public float orbitSpeed = 0f;
+
 	void OnDrawGizmos() {
 		if(showLines)
 			DrawCube (transform.position, transform.rotation, GetComponent<BoxCollider> ().size);
@@ -20,33 +30,60 @@ public class CameraZone : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.tag == "Player") {
-			switch (cameraZoneEffect) {
-			case ThirdPersonCamera.CameraStates.StickToObject:
-			default:
-				other.GetComponent<ThirdPersonPlayer> ().gamecam.objectToStickTo = objectToStickTo;
-				break;
-
-			case ThirdPersonCamera.CameraStates.Small:
-				other.GetComponent<ThirdPersonPlayer> ().gamecam.small = true;
-				break;
-			}
+			SetValues (other);
 		}
 	}
 
+	void OnTriggerStay (Collider other) {
+		if (other.gameObject.tag == "Player") {
+			SetValues (other);
+		}
+	}
+		
 	void OnTriggerExit (Collider other) {
 		if (other.gameObject.tag == "Player") {
-			switch (cameraZoneEffect) {
-			case ThirdPersonCamera.CameraStates.StickToObject:
-			default:
-				other.GetComponent<ThirdPersonPlayer> ().gamecam.objectToStickTo = null;
-				break;
-
-			case ThirdPersonCamera.CameraStates.Small:
-				other.GetComponent<ThirdPersonPlayer> ().gamecam.small = false;
-				break;
-			}
+			SetValues (other, true);
 		}
 	}
+
+	private void SetValues(Collider other) {
+		SetValues (other, false);
+	}
+
+	private void SetValues(Collider other, bool exit) {
+		switch (cameraZoneEffect) {
+
+		case ThirdPersonCamera.CameraStates.StickToObject:
+		default:
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.objectToStickTo = (exit == false ? objectToStickTo : null);
+			break;
+
+		case ThirdPersonCamera.CameraStates.Target:
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.target = (exit == false ? true : false);
+			break;
+
+		case ThirdPersonCamera.CameraStates.Small:
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.small = (exit == false ? true : false);
+			break;
+
+		case ThirdPersonCamera.CameraStates.Orbit:
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.orbit = (exit == false ? true : false);
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.orbitSpeed = (exit == false ? orbitSpeed : 0f);
+			break;
+		}
+
+		switch (otherEffects) {
+
+		case Extras.None:
+		default:
+			break;
+
+		case Extras.setCameraBehindPlayer:
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.small = (exit == false ? true : false);
+			break;
+		}
+	}
+		
 
 	public void DrawCube (Vector3 position, Quaternion rotation, Vector3 scale) {
 		DrawCube (position, rotation, scale, color);

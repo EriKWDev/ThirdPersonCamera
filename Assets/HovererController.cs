@@ -24,7 +24,7 @@ public class HovererController : MonoBehaviour {
         thisRigidbody = GetComponent<Rigidbody>();
         originalAcceleration = acceleration;
         playerCamera = GetComponentInChildren<Camera>();
-        transform.position = new Vector3(0f, 14f, 0f);
+        //transform.position = new Vector3(0f, 14f, 0f);
         GetComponent<Renderer>().material = playerMaterials[GameObject.FindGameObjectsWithTag("Player").Length - 1];
     }
 

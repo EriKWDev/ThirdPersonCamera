@@ -19,7 +19,9 @@ public class ThirdPersonCamera : MonoBehaviour {
 		Small,
 		SmallWithMouse,
 		StickToObject,
-		Free
+		Free,
+		Orbit,
+		None
 	}
 
 	public CameraStates defaultCameraState = CameraStates.Behind;
@@ -40,6 +42,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 	private float yRotateSpeed;
 
 	[Header("Camera State Settings : Target")]
+	public bool target = false;
 	public KeyCode targetKey = KeyCode.Tab;
 	[SerializeField]
 	private float targetFOV;
@@ -53,6 +56,10 @@ public class ThirdPersonCamera : MonoBehaviour {
 
 	[Header("Camera State Settings : StickToObject")]
 	public GameObject objectToStickTo;
+
+	[Header("Camera State Settings : Orbit")]
+	public float orbitSpeed;
+	public bool orbit = false;
 
 	[Header("Smoothing and Damping")]
 	[SerializeField]
@@ -83,8 +90,11 @@ public class ThirdPersonCamera : MonoBehaviour {
 		{
 			cameraState = defaultCameraState;
 
-			if (Input.GetKey (targetKey)) {
+			if (Input.GetKey (targetKey) || target == true) {
 				cameraState = CameraStates.Target;
+			}
+			if (orbit == true) {
+				cameraState = CameraStates.Orbit;
 			}
 			if (small == true) {
 				cameraState = CameraStates.Small;
@@ -163,13 +173,26 @@ public class ThirdPersonCamera : MonoBehaviour {
 			SmoothPosition (transform.position, targetPosition);
 			transform.LookAt (characterOffset);
 			break;
+
+		case CameraStates.Orbit:
+			characterOffset = Vector3.Lerp (characterOffset, followTransform.position + new Vector3 (0f, distanceUp, 0f), lerpValue * Time.deltaTime);
+			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, defaultFOV, FOVLerpValue * Time.deltaTime);
+
+			transform.RotateAround (followTransform.position, Vector3.up, orbitSpeed * Time.deltaTime);
+			targetPosition = (transform.position - characterOffset).normalized * distanceAway + characterOffset;
+			targetPosition.y = characterOffset.y;
+
+			transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * 50f);
+
+			transform.LookAt (characterOffset);
+			break;
 		
 		}
 	}
 
 	private void SmoothPosition(Vector3 fromPos, Vector3 toPos) {
-		//transform.position = Vector3.SmoothDamp (fromPos, toPos, ref velocityCamSmooth, camSmoothDampTime);
-		transform.position = Vector3.Lerp (fromPos, toPos, Time.deltaTime * lerpValue);
+		transform.position = Vector3.SmoothDamp (fromPos, toPos, ref velocityCamSmooth, camSmoothDampTime);
+		//transform.position = Vector3.Lerp (fromPos, toPos, Time.deltaTime * lerpValue);
 	}
 
 	private void CompensateForWalls(Vector3 fromObject, ref Vector3 toTarget) {
@@ -184,5 +207,9 @@ public class ThirdPersonCamera : MonoBehaviour {
 			}	
 			toTarget = new Vector3 (wallHit.point.x, wallHit.point.y, wallHit.point.z);
 		}
+	}
+
+	public void SetBehindPlayer() {
+		
 	}
 }

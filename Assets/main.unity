@@ -1635,7 +1635,7 @@ GameObject:
   - 65: {fileID: 524980642}
   - 114: {fileID: 524980641}
   m_Layer: 0
-  m_Name: CameraZone
+  m_Name: SmallZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1652,9 +1652,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherEffects: 0
   cameraZoneEffect: 4
+  showLines: 1
   color: {r: 1, g: 0, b: 0.84827614, a: 1}
   objectToStickTo: {fileID: 0}
+  orbitSpeed: 0
 --- !u!65 &524980642
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1691,7 +1694,7 @@ GameObject:
   - 65: {fileID: 544114332}
   - 114: {fileID: 544114331}
   m_Layer: 0
-  m_Name: CameraZone
+  m_Name: StickToObjectZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1708,9 +1711,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherEffects: 0
   cameraZoneEffect: 6
+  showLines: 1
   color: {r: 1, g: 0, b: 0, a: 1}
   objectToStickTo: {fileID: 590218932}
+  orbitSpeed: 0
 --- !u!65 &544114332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1826,8 +1832,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214f1ef09da81514f8b524e4901a5b5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.11724138, g: 0, b: 1, a: 1}
+  color: {r: 0, g: 1, b: 0.83448267, a: 1}
   size: {x: 0.2, y: 0.2, z: 0.2}
+  debug: 1
 --- !u!4 &576665818
 Transform:
   m_ObjectHideFlags: 0
@@ -1835,7 +1842,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 576665816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.8, y: 3.22, z: -21.2}
+  m_LocalPosition: {x: 11.17, y: 3.22, z: -21.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -1946,6 +1953,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0.11724138, g: 0, b: 1, a: 1}
   size: {x: 0.3, y: 0.3, z: 0.3}
+  debug: 1
 --- !u!4 &590218934
 Transform:
   m_ObjectHideFlags: 0
@@ -2642,7 +2650,7 @@ GameObject:
   - 65: {fileID: 836949579}
   - 114: {fileID: 836949578}
   m_Layer: 0
-  m_Name: CameraZone (2)
+  m_Name: StickToObjectZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2659,9 +2667,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherEffects: 0
   cameraZoneEffect: 6
+  showLines: 1
   color: {r: 1, g: 0, b: 0.14482737, a: 1}
   objectToStickTo: {fileID: 576665816}
+  orbitSpeed: 0
 --- !u!65 &836949579
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2688,6 +2699,65 @@ Transform:
   - {fileID: 576665818}
   m_Father: {fileID: 0}
   m_RootOrder: 12
+--- !u!1 &872745578
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 872745581}
+  - 65: {fileID: 872745580}
+  - 114: {fileID: 872745579}
+  m_Layer: 0
+  m_Name: OrbitZone (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &872745579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 872745578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherEffects: 0
+  cameraZoneEffect: 3
+  showLines: 1
+  color: {r: 1, g: 0, b: 0.64137936, a: 1}
+  objectToStickTo: {fileID: 0}
+  orbitSpeed: 0
+--- !u!65 &872745580
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 872745578}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 3, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &872745581
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 872745578}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 6.81, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
 --- !u!1 &885715095
 GameObject:
   m_ObjectHideFlags: 0
@@ -4303,6 +4373,10 @@ Prefab:
     - target: {fileID: 11477714, guid: c1dc941cc756abc4f9a6bfd74133bc7b, type: 2}
       propertyPath: yRotateSpeed
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 11477714, guid: c1dc941cc756abc4f9a6bfd74133bc7b, type: 2}
+      propertyPath: orbitSpeed
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c1dc941cc756abc4f9a6bfd74133bc7b, type: 2}
@@ -6192,6 +6266,65 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1816456480}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1817135705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1817135708}
+  - 65: {fileID: 1817135707}
+  - 114: {fileID: 1817135706}
+  m_Layer: 0
+  m_Name: OrbitZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1817135706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1817135705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  otherEffects: 0
+  cameraZoneEffect: 8
+  showLines: 1
+  color: {r: 0.4068966, g: 1, b: 0, a: 1}
+  objectToStickTo: {fileID: 0}
+  orbitSpeed: 50
+--- !u!65 &1817135707
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1817135705}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 20, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &1817135708
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1817135705}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 18.327, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
 --- !u!1001 &1839673394
 Prefab:
   m_ObjectHideFlags: 0
@@ -6564,7 +6697,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2005296882}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.1, y: 9.4, z: -10.53}
+  m_LocalPosition: {x: 0, y: 27.04, z: 0}
   m_LocalScale: {x: 1, y: 0.3, z: 2}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -7077,7 +7210,7 @@ GameObject:
   - 65: {fileID: 2141022932}
   - 114: {fileID: 2141022931}
   m_Layer: 0
-  m_Name: CameraZone (1)
+  m_Name: SmallZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7094,9 +7227,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherEffects: 0
   cameraZoneEffect: 4
+  showLines: 1
   color: {r: 1, g: 0, b: 0.84827614, a: 1}
   objectToStickTo: {fileID: 0}
+  orbitSpeed: 0
 --- !u!65 &2141022932
 BoxCollider:
   m_ObjectHideFlags: 0
