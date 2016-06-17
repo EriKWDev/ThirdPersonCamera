@@ -211,8 +211,4 @@ public class ThirdPersonCamera : MonoBehaviour {
 			}
 		}
 	}
-
-	public void SetBehindPlayer() {
-		
-	}
 }
