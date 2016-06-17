@@ -179,10 +179,10 @@ public class ThirdPersonCamera : MonoBehaviour {
 			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, defaultFOV, FOVLerpValue * Time.deltaTime);
 
 			transform.RotateAround (followTransform.position, Vector3.up, orbitSpeed * Time.deltaTime);
-			targetPosition = (transform.position - characterOffset).normalized * distanceAway + characterOffset;
+			targetPosition = (transform.position - characterOffset).normalized * distanceAway + characterOffset + followTransform.up * distanceUp ;
 			targetPosition.y = characterOffset.y;
 
-			transform.position = Vector3.Lerp (transform.position, targetPosition, Time.deltaTime * 50f);
+			SmoothPosition (transform.position, targetPosition);
 
 			transform.LookAt (characterOffset);
 			break;
@@ -205,7 +205,10 @@ public class ThirdPersonCamera : MonoBehaviour {
 			if (debug) {
 				Debug.DrawRay (wallHit.point, Vector3.left, Color.red);
 			}	
-			toTarget = new Vector3 (wallHit.point.x, wallHit.point.y, wallHit.point.z);
+
+			if (wallHit.collider.gameObject.tag != "EffectZone") {
+				toTarget = new Vector3 (wallHit.point.x, wallHit.point.y, wallHit.point.z);
+			}
 		}
 	}
 

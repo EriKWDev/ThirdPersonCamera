@@ -15,6 +15,7 @@ public class CameraZone : MonoBehaviour {
 	public ThirdPersonCamera.CameraStates cameraZoneEffect;
 
 	public bool showLines = false;
+	public bool fillCube = false;
 	public Color color = Color.red; 
 
 	[Header("Zone Effect Settings : StickToObject")]
@@ -24,8 +25,10 @@ public class CameraZone : MonoBehaviour {
 	public float orbitSpeed = 0f;
 
 	void OnDrawGizmos() {
-		if(showLines)
+		if(showLines && !fillCube)
 			DrawCube (transform.position, transform.rotation, GetComponent<BoxCollider> ().size);
+		if(fillCube)
+			DrawCube (transform.position, transform.rotation, GetComponent<BoxCollider> ().size, true);
 	}
 
 	void OnTriggerEnter(Collider other) {
@@ -86,18 +89,25 @@ public class CameraZone : MonoBehaviour {
 		
 
 	public void DrawCube (Vector3 position, Quaternion rotation, Vector3 scale) {
-		DrawCube (position, rotation, scale, color);
+		DrawCube (position, rotation, scale, color, false);
 	}
 
-	public void DrawCube (Vector3 position, Quaternion rotation, Vector3 scale, Color cubeColor) {
+	public void DrawCube (Vector3 position, Quaternion rotation, Vector3 scale, bool fillCube) {
+		DrawCube (position, rotation, scale, color, fillCube);
+	}
+
+	public void DrawCube (Vector3 position, Quaternion rotation, Vector3 scale, Color cubeColor, bool fillCube) {
 		Matrix4x4 cubeTransform = Matrix4x4.TRS (position, rotation, scale);
 		Matrix4x4 oldGizmosMatrix = Gizmos.matrix;
 
 		Gizmos.matrix = cubeTransform;
 		Gizmos.color = cubeColor;
 
-		Gizmos.DrawWireCube (Vector3.zero, Vector3.one);
-
+		if(!fillCube)
+			Gizmos.DrawWireCube (Vector3.zero, Vector3.one);
+		if(fillCube)
+			Gizmos.DrawCube (Vector3.zero, Vector3.one);
+		
 		Gizmos.matrix = oldGizmosMatrix;
 	}
 }
