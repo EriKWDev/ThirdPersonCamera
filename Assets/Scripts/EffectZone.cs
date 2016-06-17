@@ -72,7 +72,6 @@ public class EffectZone : MonoBehaviour {
 		case Effects.SlowMotion:
 			Time.timeScale = (isInside == true ? Mathf.Lerp (Time.timeScale, newTimeScale, changeSpeed * Time.deltaTime) : Mathf.Lerp (Time.timeScale, 1f, changeSpeed * Time.deltaTime));
 			Time.fixedDeltaTime = 0.02f * Time.timeScale;
-			Debug.Log (Time.timeScale + " : " + Time.fixedDeltaTime);
 			break;
 		}
 	}
