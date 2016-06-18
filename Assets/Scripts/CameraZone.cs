@@ -5,13 +5,6 @@ using System.Collections;
 [RequireComponent (typeof (BoxCollider))]
 public class CameraZone : MonoBehaviour {
 
-	public enum Extras {
-		None,
-		setCameraBehindPlayer,
-		setCameraDefaultFov
-	}
-
-	public Extras otherEffects;
 	public ThirdPersonCamera.CameraStates cameraZoneEffect;
 
 	public bool showLines = false;
@@ -72,17 +65,6 @@ public class CameraZone : MonoBehaviour {
 		case ThirdPersonCamera.CameraStates.Orbit:
 			other.GetComponent<ThirdPersonPlayer> ().gamecam.orbit = (exit == false ? true : false);
 			other.GetComponent<ThirdPersonPlayer> ().gamecam.orbitSpeed = (exit == false ? orbitSpeed : 0f);
-			break;
-		}
-
-		switch (otherEffects) {
-
-		case Extras.None:
-		default:
-			break;
-
-		case Extras.setCameraBehindPlayer:
-			other.GetComponent<ThirdPersonPlayer> ().gamecam.small = (exit == false ? true : false);
 			break;
 		}
 	}
