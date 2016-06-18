@@ -20,12 +20,10 @@ public class ThirdPersonPlayer : MonoBehaviour {
 	private float v = 0f;
 
 	void Update () {
-
 		h = Input.GetAxis ("Horizontal");
 		v = Input.GetAxis ("Vertical");
 
 		StickToWorldSpace (this.transform, gamecam.transform, ref direction, ref speed);
-		
 	}
 
 	public void StickToWorldSpace(Transform root, Transform camera, ref float directionOut, ref float speedOut) {
