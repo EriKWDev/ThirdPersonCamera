@@ -14,6 +14,9 @@ public class CameraZone : MonoBehaviour {
 	[Header("Zone Effect Settings : StickToObject")]
 	public GameObject objectToStickTo;
 
+	[Header("Zone Effect Settings : StickToObjectAndChangeTarget")]
+	public GameObject newTarget;
+
 	[Header("Zone Effect Settings : Orbit")]
 	public float orbitSpeed = 0f;
 
@@ -52,6 +55,11 @@ public class CameraZone : MonoBehaviour {
 		case ThirdPersonCamera.CameraStates.StickToObject:
 		default:
 			other.GetComponent<ThirdPersonPlayer> ().gamecam.objectToStickTo = (exit == false ? objectToStickTo : null);
+			break;
+
+		case ThirdPersonCamera.CameraStates.StickToObjectAndChangeTarget:
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.objectToStickTo = (exit == false ? objectToStickTo : null);
+			other.GetComponent<ThirdPersonPlayer> ().gamecam.newTarget = (exit == false ? newTarget : null);
 			break;
 
 		case ThirdPersonCamera.CameraStates.Target:

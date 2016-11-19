@@ -1292,7 +1292,7 @@ GameObject:
   - 114: {fileID: 524980641}
   m_Layer: 0
   m_Name: SmallZone
-  m_TagString: CameraZone
+  m_TagString: EffectZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1308,7 +1308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherEffects: 0
   cameraZoneEffect: 4
   showLines: 1
   fillCube: 0
@@ -1352,7 +1351,7 @@ GameObject:
   - 114: {fileID: 544114331}
   m_Layer: 0
   m_Name: StickToObjectZone
-  m_TagString: CameraZone
+  m_TagString: EffectZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1368,7 +1367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherEffects: 0
   cameraZoneEffect: 6
   showLines: 1
   fillCube: 0
@@ -2206,7 +2204,7 @@ GameObject:
   - 114: {fileID: 836949578}
   m_Layer: 0
   m_Name: StickToObjectZone
-  m_TagString: CameraZone
+  m_TagString: EffectZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2222,7 +2220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherEffects: 0
   cameraZoneEffect: 6
   showLines: 1
   fillCube: 0
@@ -3593,6 +3590,10 @@ Prefab:
       propertyPath: orbitSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 11477714, guid: c1dc941cc756abc4f9a6bfd74133bc7b, type: 2}
+      propertyPath: camSmoothDampTime
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c1dc941cc756abc4f9a6bfd74133bc7b, type: 2}
   m_IsPrefabParent: 0
@@ -4522,7 +4523,7 @@ GameObject:
   - 114: {fileID: 1817135706}
   m_Layer: 0
   m_Name: OrbitZone
-  m_TagString: CameraZone
+  m_TagString: EffectZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4538,7 +4539,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherEffects: 0
   cameraZoneEffect: 8
   showLines: 1
   fillCube: 0
@@ -5144,7 +5144,7 @@ GameObject:
   - 114: {fileID: 2141022931}
   m_Layer: 0
   m_Name: SmallZone
-  m_TagString: CameraZone
+  m_TagString: EffectZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5160,7 +5160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f8f7236e03444439c9105f99d5d662, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  otherEffects: 0
   cameraZoneEffect: 4
   showLines: 1
   fillCube: 0

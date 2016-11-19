@@ -21,6 +21,7 @@ public class ThirdPersonCamera : MonoBehaviour {
 		StickToObject,
 		Free,
 		Orbit,
+		StickToObjectAndChangeTarget,
 		None
 	}
 
@@ -56,6 +57,9 @@ public class ThirdPersonCamera : MonoBehaviour {
 
 	[Header("Camera State Settings : StickToObject")]
 	public GameObject objectToStickTo;
+
+	[Header("Camera State Settings : StickToObjectAndChangeTarget")]
+	public GameObject newTarget;
 
 	[Header("Camera State Settings : Orbit")]
 	public float orbitSpeed;
@@ -99,8 +103,11 @@ public class ThirdPersonCamera : MonoBehaviour {
 			if (small == true) {
 				cameraState = CameraStates.Small;
 			}
-			if (objectToStickTo != null) {
+			if (objectToStickTo != null && newTarget == null) {
 				cameraState = CameraStates.StickToObject;
+			}
+			if (objectToStickTo != null && newTarget != null && Input.GetKey (KeyCode.C)) {
+				cameraState = CameraStates.StickToObjectAndChangeTarget;
 			}
 		}
 
@@ -172,6 +179,15 @@ public class ThirdPersonCamera : MonoBehaviour {
 
 			SmoothPosition (transform.position, targetPosition);
 			transform.LookAt (characterOffset);
+			break;
+
+		case CameraStates.StickToObjectAndChangeTarget:
+			characterOffset = Vector3.Lerp (characterOffset, followTransform.position + new Vector3 (0f, distanceUp, 0f), lerpValue * Time.deltaTime);
+			GetComponent<Camera> ().fieldOfView = Mathf.SmoothStep (GetComponent<Camera> ().fieldOfView, defaultFOV, FOVLerpValue * Time.deltaTime);
+			targetPosition = objectToStickTo.transform.position;
+
+			SmoothPosition (transform.position, targetPosition);
+			transform.LookAt (newTarget.transform.position);
 			break;
 
 		case CameraStates.Orbit:
